@@ -21,7 +21,8 @@
         {
             "label": "Build",
             "type": "shell",
-            "command": "flutter pub run build_runner watch --delete-conflicting-outputs",
+            "command": "flutter packages pub run build_runner watch --delete-conflicting-outputs",
+            // "command": "flutter pub run build_runner watch --delete-conflicting-outputs",
             "group": {
                 "kind": "build",
                 "isDefault": true

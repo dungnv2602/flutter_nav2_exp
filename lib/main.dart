@@ -1,29 +1,4 @@
-// // TODO(joe): https://github.com/flutter/flutter/issues/69315#issuecomment-722038062
-
-// // TODO(joe): https://docs.google.com/document/d/1Q0jx0l4-xymph9O6zLaOY4d_f7YFpNWX_eGbzYxr9wY/edit#
-// // TODO(joe): full control vs targeted modifications
-// // TODO(joe): initial route
-// // TODO(joe): sub-router/nested-navigation
-// // TODO(joe): dynamically access route stack
-// // TODO(joe): intergrate restoration framework
-// // TODO(joe): save nav history => refer to it directly when open app again
-// // TODO(joe): DirectionalTransition, CupertinoDirectionTransition on Nav 2
-
-// // TODO(joe): write an article about my take on Nav 2 + State Restoration
-
 // import 'package:flutter/foundation.dart';
-
-// /// you have full controll over route stack and customize how to transition each route. For example, you cannot remove three routes in the middle with the navigator 1.0 API.
-// ///
-// /// you have complete control over what to do when user press android back button. This become more promising when you have more than one navigator in the widget tree.
-// ///
-// /// Web use case as you mentioned.
-// ///
-// /// you also have full control over how to parse the initial route. In the Navigator 1.0, the initial route is parsed by / and will create a stack of routes, and you cannot update the initial route once it is built.
-
-// /// The popRoute() method is called by the Router when the backButtonDispatcher reports that the operating system is requesting that the current route should be popped. This will likely cause the route delegate to forward the pop to the Navigator previously returned by its build method. If the routeDelegate was able to handle the pop, it should return true. Otherwise it should return false. Returning false may pop the route of a surrounding Navigator (which may be the SystemNavigator), depending on the concrete implementation of the backButtonDispatcher.
-// ///
-// ///
 
 // import 'package:flutter/material.dart';
 
@@ -116,15 +91,7 @@
 //   }
 // }
 
-// /// [_onPopPage] - To use the Pages API we must implement this callback. Navigator uses this to report back when the a route for a page is popped. We use this to update our pages list to remove the page for the route. Otherwise, the next time the pages list is updated it will interpret the page as a new route and display it.
 
-// /// [transitionDelegate] - This is nothing to do directly with animation. This is used by Navigator to determine if a change to the pages list indicates a push, pop or even add.
-// /// This default transition delegate follows these rules.
-// /// * Firstly, all the entering routes are placed on top of the exiting routes if they are at the same location.
-// /// * Secondly, the top most route will always transition with an animated transition.
-// /// * All the other routes below will either be completed or added without an animated transition.
-
-// /// [reportsRouteUpdateToEngine]: only care about this when using [Page] without [Router]
 
 // class MyRouterDelegate extends RouterDelegate<MyRoute>
 //     with ChangeNotifier, PopNavigatorRouterDelegateMixin<MyRoute> {

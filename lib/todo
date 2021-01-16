@@ -1,0 +1,27 @@
+// TODO(joe): https://github.com/flutter/flutter/issues/69315#issuecomment-722038062
+
+// TODO(joe): https://docs.google.com/document/d/1Q0jx0l4-xymph9O6zLaOY4d_f7YFpNWX_eGbzYxr9wY
+
+// TODO(joe): dynamically access route stack
+// TODO(joe): custom transition animations (page in & page out)
+// TODO(joe): resume session (exact location & state) when open app again. This is essensially intergrate restoration framework (save nav state & page state)
+// TODO(joe): support initial route from system intents (e.g: push-notification), essensially deep-linking
+// TODO(joe): sub-router/nested-navigation. Typically the behaviors of material bottom navigation bar
+
+/// Routes & RouteSettings
+Currently, the only way to add a Route to the history stack without playing its entrance animation is to mark it as an initial route in its RouteSettings. The declarative API requires that routes can be added without animation at any time. This is useful when the route is covered by another route and playing the animation simply doesn't make sense. To support this, a didAdd method is added to the Route interface. This method is called by the Navigator instead of didPush when the Route should just be added without its regular entrance animation. To simplify things, this new method will also be used to bring the initial route on screen. This makes the RouteSettings.initialRoute parameter useless and it will be removed from RouteSettings. This is a minor breaking change.
+
+/// RouteInformationParser
+The asynchronous nature gives developers more flexibility in implementing these delegates: The routeNameParser may need to communicate with the OEM thread to obtain more data about a route. This communication can only happen asynchronously and therefore the parsing API also needs to be asynchronously. Similar statements apply to most of the other delegate API methods.
+
+/// RouterDelegate
+The main task of the RouterDelegate is to return a properly configured Navigator in its build method whenever the Router asks for one. The Navigator should be configured with a list of Pages that the RouterDelegate would like to display on screen. Whenever the RouterDelegate would like to change the configuration of the Navigator returned by its build method it needs to call notifyListeners() inherited from its superclass. That's the signal for the Router widget to rebuild and request a new Navigator from the RouteDelegate by calling the delegate's build method again.
+
+The other methods of the routerDelegate are called by the Router in response to system events: setInitialRoutePath and setNewRoutePath are called when the initial route or a new route have been retrieved from the routeNameProvider and the route string has been parsed by the routeNameParser. In response to these calls, the delegate may notify the router via notifyListeners to request a rebuild of the Navigator with the new configuration implied by the arguments handed to those methods.
+
+The popRoute() method is called by the Router when the backButtonDispatcher reports that the operating system is requesting that the current route should be popped. This will likely cause the route delegate to forward the pop to the Navigator previously returned by its build method. If the routeDelegate was able to handle the pop, it should return true. Otherwise it should return false. Returning false may pop the route of a surrounding Navigator (which may be the SystemNavigator), depending on the concrete implementation of the backButtonDispatcher.
+
+/// Back Button Dispatcher
+When takePriority() is called on a ChildBackButtonDispatcher it will call deferTo() on its parent. The parent remembers all children that have called that method in an order list. When it is notified by the parent (or in the case of the RootBackButtonDispatcher by the operating system) that the back button has been pressed, it forwards this notification to the last child in that list via a method call. If the list is empty, it notifies its Router by calling notifyListeners() from its superclass. A child can also call forget() on its parent if it no longer wants to receive back button notifications. In that case, the parent removes the child from its internal list.
+
+When takePriority() is called on any BackButtonDispatcher, the dispatcher will also clear its internal child list to no longer forward the back button notification to any children.

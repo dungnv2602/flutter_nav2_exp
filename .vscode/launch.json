@@ -5,10 +5,10 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Flutter Web Debug",
+            "name": "Flutter Web Debug Nested",
             "type": "dart",
             "request": "launch",
-            "program": "lib/nest_navigator_demo_bk.dart",
+            "program": "lib/nest_navigator_demo.dart",
             "args": [
                 "-d",
                 "chrome",
@@ -17,10 +17,22 @@
             ],
         },
         {
-            "name": "Flutter Web Debug Nested",
+            "name": "Flutter auto_route Debug",
             "type": "dart",
             "request": "launch",
-            "program": "lib/nest_navigator_demo.dart",
+            "program": "lib/auto_route_demo/main.dart",
+            "args": [
+                "-d",
+                "chrome",
+                "--web-renderer",
+                "canvaskit",
+            ],
+        },
+        {
+            "name": "Flutter Web Debug",
+            "type": "dart",
+            "request": "launch",
+            "program": "lib/main.dart",
             "args": [
                 "-d",
                 "chrome",
